@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "tsx src/server.ts",
     "build": "tsup src/server.ts --format esm --target node22 --splitting=false --out-dir dist",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "poll": "tsx src/cli/poll.ts"
   },
   "dependencies": {
     "axios": "^1.11.0",

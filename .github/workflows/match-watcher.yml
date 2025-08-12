@@ -1,0 +1,68 @@
+name: Match Watcher
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # every :00 and :30 (UTC)
+  workflow_dispatch: # allow manual runs from the Actions tab
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      # Map GitHub Secrets to process.env the app expects
+      API_URL: ${{ secrets.API_URL }}
+      API_KEY: ${{ secrets.API_KEY }}
+      API_KEY_HEADER: ${{ secrets.API_KEY_HEADER }}
+      MY_NAME: ${{ secrets.MY_NAME }}
+
+      MAIL_SERVICE: ${{ secrets.MAIL_SERVICE }}
+      MAIL_USER: ${{ secrets.MAIL_USER }}
+      MAIL_APP_PASSWORD: ${{ secrets.MAIL_APP_PASSWORD }}
+
+      TO_EMAIL: ${{ secrets.TO_EMAIL }}
+
+      # Keep state in the workspace; we'll cache this folder
+      STATE_FILE: ./data/state.json
+
+      # Cron is irrelevant here (Actions triggers us), but your code reads it—so keep default
+      POLL_CRON: '*/30 * * * *'
+
+      # Port not used, but required by env loader in some setups
+      PORT: '8080'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      # Restore last saved state directory (so change detection works across runs)
+      - name: Restore state cache
+        id: restore-state
+        uses: actions/cache/restore@v4
+        with:
+          path: data
+          # Restore the most recent cache with this prefix
+          restore-keys: |
+            match-watcher-state-
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run poll once
+        run: npm run poll
+
+      # Save updated state directory as a new cache entry
+      - name: Save state cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data
+          # Use a unique key each run; the restore step will grab the newest by prefix
+          key: match-watcher-state-${{ github.run_id }}
