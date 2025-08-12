@@ -68,6 +68,8 @@ export async function sendMatchInvites(items: ChangeItem[]) {
     const subjectBase = `${m.player_name} vs ${m.opponent_name}`;
     const subject = `🎾 ${subjectBase}`;
 
+    console.info('Match Info to be sent: ', item.match);
+
     await transporter.sendMail({
       from: `"Match Watcher" <${env.mailUser}>`,
       to: env.toEmail,
