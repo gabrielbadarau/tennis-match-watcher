@@ -49,6 +49,7 @@ jobs:
         with:
           path: data
           # Restore the most recent cache with this prefix
+          key: match-watcher-state-${{ github.run_id }}
           restore-keys: |
             match-watcher-state-
 
