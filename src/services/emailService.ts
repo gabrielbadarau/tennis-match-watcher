@@ -18,7 +18,7 @@ function toHTML(items: ChangeItem[], myName: string) {
     .container { max-width: 720px; margin: 0 auto; background:#fff; border-radius:16px; box-shadow: 0 6px 24px rgba(0,0,0,0.06); overflow: hidden; border-left: 0.5px solid #d1d5db; border-right: 0.5px solid #d1d5db; border-bottom: 0.5px solid #d1d5db;}
     .header { background: #0F2027; background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027); background: linear-gradient(to right, #2C5364, #203A43, #0F2027); color:#fff; padding:20px 24px; }
     .header h1 { margin:0; font-size:20px; }
-    .match { padding:16px; border-bottom: 0.5px solid #d1d5db;}
+    .match { background-color: #f8fafc; padding:16px; border-bottom: 0.5px solid #d1d5db;}
     .badge { display:inline-block; font-size:10.5px; padding:2px 6px; border-radius:999px; color:#fff; }
     .badge.new { background:#1e293b; }
     .badge.updated { background:#dc2626; }

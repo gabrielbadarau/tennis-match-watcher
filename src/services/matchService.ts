@@ -6,14 +6,18 @@ import { Match, MatchFields } from '../utils/types';
 export function isAboutMeOrMyFriends(m: Match) {
   const myFriends = env.myFriends.split(',').map(normalize);
 
+  console.info('Friends list is ', !myFriends[0] ? 'empty' : myFriends);
+
   const isMe =
     normalize(m.player_name).includes(normalize(env.myName)) ||
     normalize(m.opponent_name).includes(normalize(env.myName));
 
-  const isFriend = myFriends.some(
-    (friend) =>
-      normalize(m.player_name).includes(friend) || normalize(m.opponent_name).includes(friend),
-  );
+  const isFriend = !myFriends[0]
+    ? false
+    : myFriends.some(
+        (friend) =>
+          normalize(m.player_name).includes(friend) || normalize(m.opponent_name).includes(friend),
+      );
 
   return isMe || isFriend;
 }
