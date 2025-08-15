@@ -1,3 +1,5 @@
+import type { SendMailOptions } from 'nodemailer';
+
 export interface Match {
   match_id: number;
   tournament_id: number;
@@ -23,4 +25,42 @@ export interface Match {
   schedule_info: string;
   players_notes: string | null;
   is_final: boolean;
+}
+
+export interface Changes {
+  kind: 'NEW' | 'UPDATED';
+  match: MatchFields;
+  seq: number;
+  diff?: any[];
+}
+
+export interface MatchFields {
+  match_id: number;
+  tournament_name: string;
+  game_level: string;
+  game_type: string;
+  player_name: string;
+  opponent_name: string;
+  schedule_date: string;
+  schedule_day: string;
+  schedule_hour: string;
+  club_name: string;
+  court_name: string;
+  schedule_info?: string | null;
+  players_notes?: string | null;
+  is_final: boolean;
+  is_draft: boolean;
+  winner_id: number;
+  gl_position: number;
+  tournament_id: number;
+}
+
+interface ICalEvent {
+  method: 'REQUEST' | 'PUBLISH';
+  content: string;
+  filename: string;
+}
+
+export interface MatchWatcherMailOptions extends SendMailOptions {
+  icalEvent?: ICalEvent;
 }

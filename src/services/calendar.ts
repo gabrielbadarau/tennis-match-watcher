@@ -1,5 +1,6 @@
 import { pad2, escapeICS } from '../utils/text.js';
 import env from '../config/env.js';
+import { MatchFields } from '../utils/types.js';
 
 const TZID = 'Europe/Bucharest';
 
@@ -19,27 +20,6 @@ function addHoursLocal(dateStr: string, timeStr: string, hours: number) {
   const d = new Date(`${dateStr}T${timeStr}:00`);
   d.setHours(d.getHours() + hours);
   return ymdhms(d);
-}
-
-export interface MatchFields {
-  match_id: number;
-  tournament_name: string;
-  game_level: string;
-  game_type: string;
-  player_name: string;
-  opponent_name: string;
-  schedule_date: string;
-  schedule_day: string;
-  schedule_hour: string;
-  club_name: string;
-  court_name: string;
-  schedule_info?: string | null;
-  players_notes?: string | null;
-  is_final: boolean;
-  is_draft: boolean;
-  winner_id: number;
-  gl_position: number;
-  tournament_id: number;
 }
 
 export function buildICSForMatch(

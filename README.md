@@ -1,6 +1,6 @@
 # 📅 Match Watcher — Automatic Tennis Match Notifications
 
-Match Watcher is a **Node.js + Express + TypeScript** application that monitors your tennis matches and sends automatic **email notifications** with **calendar invites** when new matches are scheduled or existing ones change.  
+Match Watcher is a **Node.js + Express + TypeScript** application that monitors your tennis matches (and optionally your friends' matches) and sends automatic **email notifications** with **calendar invites** when new matches are scheduled or existing ones change.  
 It polls your tennis API every 30 minutes (configurable via cron) and updates you in real time.
 
 ## ✨ Features
@@ -12,6 +12,7 @@ It polls your tennis API every 30 minutes (configurable via cron) and updates yo
   - Side notes and player notes
 - 📅 **iCalendar (.ics) invites** so matches appear in Google Calendar, iPhone Calendar, Outlook, etc.
 - 🔄 **Update detection** — if a match is rescheduled, location changes, or notes are added, you get an updated invite.
+- 👥 **Friends Mode** — get notified about your friends’ matches (without sending calendar invites).
 - 🛠 **Developer-friendly modular code** using TypeScript, Axios, Node-Cron, and Nodemailer.
 
 ---
@@ -48,6 +49,10 @@ API_KEY_HEADER=Apikey
 
 # Your name exactly as it appears in the API
 MY_NAME=Your Name Here
+
+# Comma-separated list of friends’ names (exactly as they appear in the API)
+# Matches involving these friends will trigger email notifications (without calendar invites)
+MY_FRIENDS=John Doe,Jane Smith,Mark Johnson
 
 # Email sending config (supports Gmail, Yahoo, Outlook, etc.)
 MAIL_SERVICE=yahoo

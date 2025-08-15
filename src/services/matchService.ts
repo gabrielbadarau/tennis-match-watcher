@@ -1,14 +1,21 @@
 import crypto from 'node:crypto';
 import env from '../config/env.ts';
 import { normalize } from '../utils/text';
-import { MatchFields } from './calendar';
-import { Match } from '../utils/types';
+import { Match, MatchFields } from '../utils/types';
 
-export function isAboutMe(m: Match) {
-  return (
+export function isAboutMeOrMyFriends(m: Match) {
+  const myFriends = env.myFriends.split(',').map(normalize);
+
+  const isMe =
     normalize(m.player_name).includes(normalize(env.myName)) ||
-    normalize(m.opponent_name).includes(normalize(env.myName))
+    normalize(m.opponent_name).includes(normalize(env.myName));
+
+  const isFriend = myFriends.some(
+    (friend) =>
+      normalize(m.player_name).includes(friend) || normalize(m.opponent_name).includes(friend),
   );
+
+  return isMe || isFriend;
 }
 
 export function isFuture(m: Match) {

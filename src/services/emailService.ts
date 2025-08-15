@@ -1,6 +1,8 @@
 import nodemailer from 'nodemailer';
 import env from '../config/env';
-import { buildICSForMatch, MatchFields } from './calendar';
+import { buildICSForMatch } from './calendar';
+import { MatchFields, MatchWatcherMailOptions } from '../utils/types';
+import { normalize } from '../utils/text';
 
 interface ChangeItem {
   kind: 'NEW' | 'UPDATED';
@@ -70,16 +72,25 @@ export async function sendMatchInvites(items: ChangeItem[]) {
 
     console.info('Match Info to be sent: ', item.match);
 
-    await transporter.sendMail({
+    const mailOptions: MatchWatcherMailOptions = {
       from: `"Match Watcher" <${env.mailUser}>`,
       to: env.toEmail,
       subject,
-      html: toHTML([item], env.myName), // << pass only the current item
-      icalEvent: {
+      html: toHTML([item], env.myName),
+    };
+
+    const isMatchAboutMe =
+      normalize(m.player_name).includes(normalize(env.myName)) ||
+      normalize(m.opponent_name).includes(normalize(env.myName));
+
+    if (isMatchAboutMe) {
+      mailOptions.icalEvent = {
         method: 'REQUEST',
         content: buildICSForMatch(m, item.seq, 'REQUEST'),
         filename: `match-${m.match_id}.ics`,
-      },
-    });
+      };
+    }
+
+    await transporter.sendMail(mailOptions);
   }
 }

@@ -1,16 +1,15 @@
 import apiClient from '../services/apiClient';
 import { loadState, saveState } from '../utils/fileStore';
 import {
-  isAboutMe,
+  isAboutMeOrMyFriends,
   isFuture,
   hasLocationAndHour,
   pickFields,
   signature,
 } from '../services/matchService';
 import { sendMatchInvites } from '../services/emailService';
-import { MatchFields } from '../services/calendar';
 import env from '../config/env';
-import { Match } from '../utils/types';
+import { Match, MatchFields } from '../utils/types';
 
 export async function pollMatches() {
   const t0 = Date.now();
@@ -23,7 +22,7 @@ export async function pollMatches() {
     if (!Array.isArray(data)) throw new Error('API did not return array');
 
     const relevant = data
-      .filter(isAboutMe)
+      .filter(isAboutMeOrMyFriends)
       .filter(isFuture)
       .filter(hasLocationAndHour)
       .filter((m: Match) => !m.winner_id && !m.score);

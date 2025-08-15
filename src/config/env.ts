@@ -23,6 +23,7 @@ const env = {
   apiKey: process.env.API_KEY!,
   apiKeyHeader: process.env.API_KEY_HEADER || 'Apikey',
   myName: process.env.MY_NAME!,
+  myFriends: process.env.MY_FRIENDS || '',
   mailService: process.env.MAIL_SERVICE!,
   mailUser: process.env.MAIL_USER!,
   mailAppPassword: process.env.MAIL_APP_PASSWORD!,
