@@ -44,12 +44,18 @@ function toHTML(items: ChangeItem[], myName: string) {
             .map((d) => `<li><b>${d.field}</b>: "${d.from ?? '—'}" → "${d.to ?? '—'}"</li>`)
             .join('')}</ul>`
         : '';
+      const score = m.score
+        ? `<div style="margin-top:5px; display:flex;"><img width="24" height="24" src="https://img.icons8.com/ios/24/gold-medal.png" alt="gold-medal" style="margin-right:6px"/>${
+            m.winner_id === m.player_id ? m.player_name : m.opponent_name
+          } ${m.score}</div></div>`
+        : '';
       return `
     <div class="match">
       <div class="card-title">${badge} <b style="margin-left:4px">${m.player_name} vs ${m.opponent_name}</b></div>
       <div style="margin-top:8px; display:flex;"><img width="24" height="24" src="https://img.icons8.com/quill/24/trophy.png" alt="trophy" style="margin-right:6px"/> ${m.tournament_name} — ${m.game_level} / ${m.game_type}</div>
-      <div style="display:flex;"><img width="24" height="24" src="https://img.icons8.com/quill/24/calendar.png" alt="calendar" style="margin-right:6px"/> ${m.schedule_day} at ${m.schedule_hour}</div>
-      <div style="display:flex;"><img width="24" height="24" src="https://img.icons8.com/quill/24/marker.png" alt="marker" style="margin-right:6px"/> ${m.club_name} — Court ${m.court_name}</div>
+      <div style="display:flex; margin-top:5px; "><img width="24" height="24" src="https://img.icons8.com/quill/24/calendar.png" alt="calendar" style="margin-right:6px"/> ${m.schedule_day} at ${m.schedule_hour}</div>
+      <div style="display:flex; margin-top:5px;"><img width="24" height="24" src="https://img.icons8.com/quill/24/marker.png" alt="marker" style="margin-right:6px"/> ${m.club_name} — Court ${m.court_name}</div>
+      ${score}
       ${sideNotes}
       ${changes}
     </div>`;

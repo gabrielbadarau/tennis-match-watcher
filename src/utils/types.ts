@@ -44,6 +44,7 @@ export interface MatchFields {
   schedule_date: string;
   schedule_day: string;
   schedule_hour: string;
+  score: string;
   club_name: string;
   court_name: string;
   schedule_info?: string | null;
@@ -53,6 +54,8 @@ export interface MatchFields {
   winner_id: number;
   gl_position: number;
   tournament_id: number;
+  opponent_id: number;
+  player_id: number;
 }
 
 interface ICalEvent {

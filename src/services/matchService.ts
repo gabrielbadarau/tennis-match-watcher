@@ -51,6 +51,9 @@ export function pickFields(m: Match): MatchFields {
     winner_id: m.winner_id,
     gl_position: m.gl_position,
     tournament_id: m.tournament_id,
+    score: m.score,
+    opponent_id: m.opponent_id,
+    player_id: m.player_id,
   };
 }
 
@@ -63,10 +66,10 @@ export function signature(fields: MatchFields) {
     court_name: fields.court_name,
     schedule_info: fields.schedule_info,
     players_notes: fields.players_notes,
-    is_final: fields.is_final,
-    is_draft: fields.is_draft,
     winner_id: fields.winner_id,
-    gl_position: fields.gl_position,
+    score: fields.score,
+    player_name: fields.player_name,
+    opponent_name: fields.opponent_name,
   };
   return crypto.createHash('sha256').update(JSON.stringify(key)).digest('hex');
 }

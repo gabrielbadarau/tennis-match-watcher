@@ -21,11 +21,7 @@ export async function pollMatches() {
 
     if (!Array.isArray(data)) throw new Error('API did not return array');
 
-    const relevant = data
-      .filter(isAboutMeOrMyFriends)
-      .filter(isFuture)
-      .filter(hasLocationAndHour)
-      .filter((m: Match) => !m.winner_id && !m.score);
+    const relevant = data.filter(isAboutMeOrMyFriends).filter(isFuture).filter(hasLocationAndHour);
 
     const changes: { kind: 'NEW' | 'UPDATED'; match: MatchFields; seq: number; diff?: any[] }[] =
       [];
