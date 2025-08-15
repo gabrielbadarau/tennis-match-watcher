@@ -16,6 +16,7 @@ jobs:
       API_KEY: ${{ secrets.API_KEY }}
       API_KEY_HEADER: ${{ secrets.API_KEY_HEADER }}
       MY_NAME: ${{ secrets.MY_NAME }}
+      MY_FRIENDS: ${{ secrets.MY_FRIENDS }}
 
       MAIL_SERVICE: ${{ secrets.MAIL_SERVICE }}
       MAIL_USER: ${{ secrets.MAIL_USER }}
