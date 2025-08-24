@@ -2,7 +2,7 @@ name: Match Watcher
 
 on:
   schedule:
-    - cron: '*/30 * * * *' # every :00 and :30 (UTC)
+    - cron: '*/10 * * * *' # every 10 minutes (UTC)
   workflow_dispatch: # allow manual runs from the Actions tab
 
 jobs:
